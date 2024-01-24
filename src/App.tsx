@@ -1,22 +1,37 @@
 import './App.css';
 import React, { useCallback, useState } from 'react';
 import imageCompression from 'browser-image-compression';
+import CustomSpinner from './components/loading';
 
-type State = {
+type ImageCompressProps = {
     progress?: number;
     inputSize?: string;
     outputSize?: string;
     inputUrl?: string;
     outputUrl?: string;
     fileName?: string;
+    inputLoaded: boolean;
+    outputLoaded: boolean;
 };
 
-const initialState: State = {};
+type CompressOptions = {
+    maxSizeMB: number;
+    maxWidthOrHeight: number;
+};
+
+const initialState: ImageCompressProps = {
+    inputLoaded: false,
+    outputLoaded: false,
+};
+const initialOptions: CompressOptions = {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 1024,
+};
 
 const App = () => {
-    const [maxSizeMB, setMaxSizeMB] = useState(1);
-    const [maxWidthOrHeight, setMaxWidthOrHeight] = useState(1024);
-    const [state, setState] = useState<State>(initialState);
+    const [compressOptions, setCompressOptions] = useState<CompressOptions>(initialOptions);
+
+    const [state, setState] = useState<ImageCompressProps>(initialState);
 
     const onProgress = useCallback((p: number) => {
         setState((prevState) => ({ ...prevState, progress: p }));
@@ -46,8 +61,7 @@ const App = () => {
             }
             const file = event.target.files![0];
             const options = {
-                maxSizeMB,
-                maxWidthOrHeight,
+                ...compressOptions,
                 onProgress,
             };
 
@@ -64,38 +78,33 @@ const App = () => {
                 outputSize: (output.size / 1024 / 1024).toFixed(2),
                 outputUrl: URL.createObjectURL(output),
                 fileName: file.name,
+                inputLoaded: true,
+                outputLoaded: true,
             }));
         },
-        [maxSizeMB, maxWidthOrHeight, onProgress],
+        [compressOptions, onProgress],
     );
+
+    const onCompressOptionsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        const { name, value } = event.currentTarget;
+        setCompressOptions((prevState) => ({ ...prevState, [name]: value }));
+    };
 
     return (
         <div className="app">
             <h2>Browser Image Compression</h2>
             <div className="app_container">
                 <div className="app_options">
-                    Options:
-                    <br />
+                    <h4>Options</h4>
                     <label htmlFor="maxSizeMB">
                         maxSizeMB:
-                        <input
-                            type="number"
-                            id="maxSizeMB"
-                            name="maxSizeMB"
-                            value={maxSizeMB}
-                            onChange={(e) => setMaxSizeMB(Number(e.currentTarget.value))}
-                        />
+                        <input type="number" name="maxSizeMB" value={compressOptions.maxSizeMB} onChange={onCompressOptionsChange} />
                     </label>
                     <br />
                     <label htmlFor="maxWidthOrHeight">
                         maxWidthOrHeight:
-                        <input
-                            type="number"
-                            id="maxWidthOrHeight"
-                            name="maxWidthOrHeight"
-                            value={maxWidthOrHeight}
-                            onChange={(e) => setMaxWidthOrHeight(Number(e.currentTarget.value))}
-                        />
+                        <input type="number" name="maxWidthOrHeight" value={compressOptions.maxWidthOrHeight} onChange={onCompressOptionsChange} />
                     </label>
                     <hr />
                     <label htmlFor="main-thread">
@@ -135,10 +144,26 @@ const App = () => {
                         <tbody>
                             <tr>
                                 <td align="center">
-                                    <img src={state.inputUrl} alt="input" />
+                                    {state.inputLoaded ? (
+                                        <img
+                                            src={state.inputUrl}
+                                            alt="input"
+                                            onLoad={() => setState((prevState) => ({ ...prevState, inputLoaded: true }))}
+                                        />
+                                    ) : (
+                                        <CustomSpinner />
+                                    )}
                                 </td>
                                 <td align="center">
-                                    <img src={state.outputUrl} alt="output" />
+                                    {state.outputLoaded ? (
+                                        <img
+                                            src={state.outputUrl}
+                                            alt="input"
+                                            onLoad={() => setState((prevState) => ({ ...prevState, outputLoaded: true }))}
+                                        />
+                                    ) : (
+                                        <CustomSpinner />
+                                    )}
                                 </td>
                             </tr>
                         </tbody>

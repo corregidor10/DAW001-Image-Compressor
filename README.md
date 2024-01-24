@@ -1,4 +1,4 @@
-# Nombre del Proyecto
+# Image Compressor
 
 Este proyecto es una aplicación de compresión de imágenes en el navegador.
 
@@ -10,7 +10,7 @@ Este proyecto es una aplicación de compresión de imágenes en el navegador.
 
 3. Instala las dependencias del proyecto usando `npm install`.
 
-4. Inicia el servidor de desarrollo usando `npm start`. La aplicación debería estar disponible en `http://localhost:3000`.
+4. Inicia el servidor de desarrollo usando `npm run dev`. La aplicación debería estar disponible en `http://localhost:5173`.
 
 ## Ejercicio
 
