@@ -91,6 +91,13 @@ const App = () => {
         setCompressOptions((prevState) => ({ ...prevState, [name]: value }));
     };
 
+    const onLoadImageInput = () => {
+        setState((prevState) => ({ ...prevState, inputLoaded: true }));
+    };
+    const onLoadImageOutput = () => {
+        setState((prevState) => ({ ...prevState, outputLoaded: true }));
+    };
+
     return (
         <div className="app">
             <h2>Browser Image Compression</h2>
@@ -145,26 +152,10 @@ const App = () => {
                         <tbody>
                             <tr>
                                 <td align="center">
-                                    {state.inputLoaded ? (
-                                        <img
-                                            src={state.inputUrl}
-                                            alt="input"
-                                            onLoad={() => setState((prevState) => ({ ...prevState, inputLoaded: true }))}
-                                        />
-                                    ) : (
-                                        <CustomSpinner />
-                                    )}
+                                    {state.inputLoaded ? <img src={state.inputUrl} alt="input" onLoad={onLoadImageInput} /> : <CustomSpinner />}
                                 </td>
                                 <td align="center">
-                                    {state.outputLoaded ? (
-                                        <img
-                                            src={state.outputUrl}
-                                            alt="input"
-                                            onLoad={() => setState((prevState) => ({ ...prevState, outputLoaded: true }))}
-                                        />
-                                    ) : (
-                                        <CustomSpinner />
-                                    )}
+                                    {state.outputLoaded ? <img src={state.outputUrl} alt="output" onLoad={onLoadImageOutput} /> : <CustomSpinner />}
                                 </td>
                             </tr>
                         </tbody>
