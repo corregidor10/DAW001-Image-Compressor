@@ -3,24 +3,27 @@
     display: flex;
     flex-direction: column;
     padding: 32px;
-    background-color: lightgray;
+    width: 100%;
 }
 .app_container {
-    background-color: aliceblue;
     width: 100%;
 }
 .app_options {
     padding: 16px;
-    margin-bottom: 32px;
     border: 1px solid black;
+    background-color: aliceblue;
+}
+
+table {
+    margin-top: 32px;
 }
 
 table,
 th,
 td {
-    border: 2px dotted lightgray;
+    border: 1px dashed steelblue;
     border-collapse: collapse;
-    background-color: aliceblue;
+    background-color: lightsteelblue;
 }
 
 td {
@@ -31,6 +34,10 @@ td {
 
 .cell {
     padding: 8px;
+    span {
+        margin-right: 16px;
+        font-weight: bold;
+    }
 }
 
 img {

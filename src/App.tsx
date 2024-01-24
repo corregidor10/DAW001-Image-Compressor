@@ -25,7 +25,7 @@ const initialState: ImageCompressProps = {
 };
 const initialOptions: CompressOptions = {
     maxSizeMB: 1,
-    maxWidthOrHeight: 1024,
+    maxWidthOrHeight: 528,
 };
 
 const App = () => {
@@ -128,12 +128,13 @@ const App = () => {
                     <table>
                         <thead>
                             <tr>
-                                <td>
+                                <td align="center">
                                     <div className="cell">
-                                        input preview <button onClick={resetState}>Reset</button>
+                                        <span>Input preview </span>
+                                        <button onClick={resetState}>Reset</button>
                                     </div>
                                 </td>
-                                <td>
+                                <td align="center">
                                     <div className="cell">
                                         <span>Output preview </span>
                                         {!!state.outputUrl && <button onClick={downloadImage}>Download</button>}
