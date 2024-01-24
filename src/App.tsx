@@ -109,13 +109,15 @@ const App = () => {
                         <input type="number" name="maxSizeMB" value={compressOptions.maxSizeMB} onChange={onCompressOptionsChange} />
                     </label>
                     <br />
+                    <br />
                     <label htmlFor="maxWidthOrHeight">
                         maxWidthOrHeight:
                         <input type="number" name="maxWidthOrHeight" value={compressOptions.maxWidthOrHeight} onChange={onCompressOptionsChange} />
                     </label>
+                    <br />
                     <hr />
                     <label htmlFor="main-thread">
-                        Compress in main-thread {state.progress && <span>{state.progress} %</span>}
+                        <span>Compress in main-thread {state.progress && <span>{state.progress} %</span>}</span>
                         <input id="main-thread" type="file" accept="image/*" onChange={compressImage} />
                     </label>
                     <p>
