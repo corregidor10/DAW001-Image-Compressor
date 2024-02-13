@@ -1,9 +1,9 @@
-import './App.css';
-import React, { useCallback, useState } from 'react';
 import imageCompression from 'browser-image-compression';
-import CustomSpinner from './components/loading';
+import React, { useCallback, useState } from 'react';
+import './App.css';
+import Table from './components/table';
 
-type ImageCompressProps = {
+export type ImageCompressProps = {
     progress?: number;
     inputSize?: string;
     outputSize?: string;
@@ -30,7 +30,6 @@ const initialOptions: CompressOptions = {
 
 const App = () => {
     const [compressOptions, setCompressOptions] = useState<CompressOptions>(initialOptions);
-
     const [state, setState] = useState<ImageCompressProps>(initialState);
 
     const onProgress = useCallback((p: number) => {
@@ -133,36 +132,13 @@ const App = () => {
                         )}
                     </p>
                 </div>
-                {state.inputUrl && (
-                    <table>
-                        <thead>
-                            <tr>
-                                <td align="center">
-                                    <div className="cell">
-                                        <span>Input preview </span>
-                                        <button onClick={resetState}>Reset</button>
-                                    </div>
-                                </td>
-                                <td align="center">
-                                    <div className="cell">
-                                        <span>Output preview </span>
-                                        {!!state.outputUrl && <button onClick={downloadImage}>Download</button>}
-                                    </div>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td align="center">
-                                    {state.inputLoaded ? <img src={state.inputUrl} alt="input" onLoad={onLoadImageInput} /> : <CustomSpinner />}
-                                </td>
-                                <td align="center">
-                                    {state.outputLoaded ? <img src={state.outputUrl} alt="output" onLoad={onLoadImageOutput} /> : <CustomSpinner />}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                )}
+                <Table
+                    imageCompressProps={state}
+                    dowloadImage={downloadImage}
+                    resetState={resetState}
+                    onLoadImageInput={onLoadImageInput}
+                    onLoadImageOutput={onLoadImageOutput}
+                />
             </div>
         </div>
     );
