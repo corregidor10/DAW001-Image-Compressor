@@ -1,5 +1,6 @@
 import { ImageCompressProps } from '../App';
 import CustomSpinner from './loading';
+import './table.css';
 
 interface ITableProps {
     imageCompressProps: ImageCompressProps;
