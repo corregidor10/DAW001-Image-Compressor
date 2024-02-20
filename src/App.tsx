@@ -1,7 +1,7 @@
 import imageCompression from 'browser-image-compression';
 import React, { useCallback, useState } from 'react';
 import './App.css';
-import Table from './components/table';
+import { Table } from './components/table';
 
 export type ImageCompressProps = {
     progress?: number;
@@ -134,7 +134,7 @@ const App = () => {
                 </div>
                 <Table
                     imageCompressProps={state}
-                    dowloadImage={downloadImage}
+                    downloadImage={downloadImage}
                     resetState={resetState}
                     onLoadImageInput={onLoadImageInput}
                     onLoadImageOutput={onLoadImageOutput}
